@@ -136,7 +136,8 @@ characters respectably."
     (setq which-key-custom-popup-max-dimensions-function
           'which-key-posframe--max-dimensions))
    (t
-    (posframe-delete which-key--buffer)
+    (when which-key--buffer
+      (posframe-delete which-key--buffer))
     (setq which-key-popup-type
           which-key-popup-type--previous)
     (setq which-key-custom-show-popup-function

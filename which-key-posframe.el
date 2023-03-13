@@ -31,7 +31,6 @@
 
 ;;; Code:
 
-(require 'cl-lib)
 (require 'posframe)
 (require 'which-key)
 

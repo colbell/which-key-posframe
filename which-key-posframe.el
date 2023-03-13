@@ -34,13 +34,13 @@
 (require 'which-key)
 
 (defgroup which-key-posframe nil
-  "Using posframe to show which key"
+  "Using posframe to show which key."
   :group 'which-key
   :prefix "which-key-posframe")
 
 (defcustom which-key-posframe-font nil
   "The font used by which-key-posframe.
-When nil, Using current frame's font as fallback."
+When nil, use current frame's font as fallback."
   :group 'which-key-posframe
   :type 'string)
 
@@ -51,7 +51,7 @@ When nil, Using current frame's font as fallback."
 
 (defcustom which-key-posframe-border-width 1
   "The border width used by which-key-posframe.
-When 0, no border is showed."
+When 0, no border is shown."
   :group 'which-key-posframe
   :type 'number)
 
@@ -62,12 +62,12 @@ When 0, no border is showed."
 
 (defface which-key-posframe
   '((t (:inherit default)))
-  "Face used by the which-key-posframe."
+  "Face used by which-key-posframe."
   :group 'which-key-posframe)
 
 (defface which-key-posframe-border
   '((t (:inherit default :background "gray50")))
-  "Face used by the which-key-posframe's border."
+  "Face used by which-key-posframe's border."
   :group 'which-key-posframe)
 
 (defvar which-key-posframe--restore nil
@@ -75,8 +75,8 @@ When 0, no border is showed."
 
 (defun which-key-posframe--show-buffer (act-popup-dim)
   "Show which-key buffer when popup type is posframe.
-Argument ACT-POPUP-DIM includes the dimension, (height . width)
-of the buffer text to be displayed in the popup"
+Argument ACT-POPUP-DIM has the form (HEIGHT . WIDTH), specifying
+the dimensions of the buffer text to be displayed in the popup."
   (when (posframe-workable-p)
     (save-window-excursion
       (posframe-show

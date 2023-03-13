@@ -70,17 +70,8 @@ When 0, no border is showed."
   "Face used by the which-key-posframe's border."
   :group 'which-key-posframe)
 
-(defvar which-key-popup-type--previous nil
-  "The previous value of `which-key-popup-type'")
-
-(defvar which-key-custom-show-popup-function--previous nil
-  "The previous value of `which-key-custom-show-popup-function'")
-
-(defvar which-key-custom-hide-popup-function--previous nil
-  "The previous value of `which-key-custom-hide-popup-function'")
-
-(defvar which-key-custom-popup-max-dimensions-function--previous nil
-  "The previous value of `which-key-custom-popup-max-dimensions-function'")
+(defvar which-key-posframe--restore nil
+  "List of values to be restored when turning of `which-key-posframe-mode'.")
 
 (defun which-key-posframe--show-buffer (act-popup-dim)
   "Show which-key buffer when popup type is posframe.
@@ -122,14 +113,11 @@ characters respectably."
   :lighter nil
   (cond
    (which-key-posframe-mode
-    (setq which-key-popup-type--previous
-          which-key-popup-type)
-    (setq which-key-custom-show-popup-function--previous
-          which-key-custom-show-popup-function)
-    (setq which-key-custom-hide-popup-function--previous
-          which-key-custom-hide-popup-function)
-    (setq which-key-custom-popup-max-dimensions-function--previous
-          which-key-custom-popup-max-dimensions-function)
+    (setq which-key-posframe--restore
+          (list which-key-popup-type
+                which-key-custom-show-popup-function
+                which-key-custom-hide-popup-function
+                which-key-custom-popup-max-dimensions-function))
     (setq which-key-popup-type 'custom)
     (setq which-key-custom-show-popup-function 'which-key-posframe--show-buffer)
     (setq which-key-custom-hide-popup-function 'which-key-posframe--hide)
@@ -138,18 +126,12 @@ characters respectably."
    (t
     (when which-key--buffer
       (posframe-delete which-key--buffer))
-    (setq which-key-popup-type
-          which-key-popup-type--previous)
-    (setq which-key-custom-show-popup-function
-          which-key-custom-show-popup-function--previous)
-    (setq which-key-custom-hide-popup-function
-          which-key-custom-hide-popup-function--previous)
-    (setq which-key-custom-popup-max-dimensions-function
-          which-key-custom-popup-max-dimensions-function--previous)
-    (setq which-key-popup-type--previous nil)
-    (setq which-key-custom-show-popup-function--previous nil)
-    (setq which-key-custom-hide-popup-function--previous nil)
-    (setq which-key-custom-popup-max-dimensions-function--previous nil))))
+    (when-let* ((r which-key-posframe--restore))
+      (setq which-key-posframe--restore nil)
+      (setq which-key-popup-type (nth 0 r))
+      (setq which-key-custom-show-popup-function (nth 1 r))
+      (setq which-key-custom-hide-popup-function (nth 2 r))
+      (setq which-key-custom-popup-max-dimensions-function (nth 3 r))))))
 
 (provide 'which-key-posframe)
 
